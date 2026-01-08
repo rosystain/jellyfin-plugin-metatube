@@ -11,8 +11,10 @@ using Jellyfin.Plugin.MetaTube.Extensions;
 
 namespace Jellyfin.Plugin.MetaTube.Providers;
 
-#if __EMBY__
+#if __EMBY49__
 public abstract class BaseProvider : IHasSupportedExternalIdentifiers
+#elif __EMBY__
+public abstract class BaseProvider
 #else
 public abstract class BaseProvider
 #endif
@@ -30,7 +32,7 @@ public abstract class BaseProvider
 
     public virtual string Name => Plugin.ProviderName;
 
-#if __EMBY__
+#if __EMBY49__
     public string[] GetSupportedExternalIdentifiers()
     {
         return new[] { Plugin.ProviderName };
