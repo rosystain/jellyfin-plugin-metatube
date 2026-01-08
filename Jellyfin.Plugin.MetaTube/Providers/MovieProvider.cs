@@ -60,9 +60,6 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
 
         var m = await ApiClient.GetMovieInfoAsync(pid.Provider, pid.Id, cancellationToken);
 
-        // Preserve original title.
-        var originalTitle = m.Title;
-
         // Convert to real actor names.
         if (Configuration.EnableRealActorNames)
             await ConvertToRealActorNames(m, cancellationToken);
@@ -119,7 +116,10 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
                     Configuration.EnableTemplate
                         ? Configuration.TaglineTemplate
                         : PluginConfiguration.DefaultTaglineTemplate, parameters),
-                OriginalTitle = originalTitle,
+                OriginalTitle = RenderTemplate(
+                    Configuration.EnableTemplate
+                        ? Configuration.OriginalTitleTemplate
+                        : PluginConfiguration.DefaultOriginalTitleTemplate, parameters),
                 Overview = m.Summary,
                 OfficialRating = Rating,
                 PremiereDate = m.ReleaseDate.GetValidDateTime(),

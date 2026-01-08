@@ -136,9 +136,16 @@ public class PluginConfiguration : BasePluginConfiguration
 #endif
     public string TaglineTemplate { get; set; } = DefaultTaglineTemplate;
 
+#if __EMBY__
+    [DisplayName("Original title template")]
+#endif
+    public string OriginalTitleTemplate { get; set; } = DefaultOriginalTitleTemplate;
+
     public static string DefaultNameTemplate => "{number} {title}";
 
     public static string DefaultTaglineTemplate => "配信開始日 {date}";
+
+    public static string DefaultOriginalTitleTemplate => "{number} - {title}";
 
 #if __EMBY__
     [DisplayName("Translation mode")]
