@@ -55,7 +55,8 @@
     <Target Name="Zip" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='Release.Emby6' or '$(Configuration)'=='Release.Emby8'">
         <ItemGroup>
             <FilesToDelete Include="$(BaseOutputPath)Jellyfin.MetaTube*.zip" Condition="'$(Configuration)'=='Release'"/>
-            <FilesToDelete Include="$(BaseOutputPath)Emby*.MetaTube*.zip" Condition="'$(Configuration)'=='Release.Emby6' or '$(Configuration)'=='Release.Emby8'"/>
+            <FilesToDelete Include="$(BaseOutputPath)Emby6.MetaTube*.zip" Condition="'$(Configuration)'=='Release.Emby6'"/>
+            <FilesToDelete Include="$(BaseOutputPath)Emby8.MetaTube*.zip" Condition="'$(Configuration)'=='Release.Emby8'"/>
             <TempZipDirectory Include="$(OutputPath)output"/>
         </ItemGroup>
         <Delete Files="@(FilesToDelete)"/>
