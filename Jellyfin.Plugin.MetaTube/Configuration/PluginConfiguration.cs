@@ -145,7 +145,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
     public static string DefaultTaglineTemplate => "配信開始日 {date}";
 
-    public static string DefaultOriginalTitleTemplate => "{number} - {title}";
+    public static string DefaultOriginalTitleTemplate => "{number} {title}";
 
 #if __EMBY__
     [DisplayName("Translation mode")]
