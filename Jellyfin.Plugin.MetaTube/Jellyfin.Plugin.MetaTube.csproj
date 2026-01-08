@@ -38,7 +38,11 @@
         <PackageReference Include="Jellyfin.Model" Version="10.11.0"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)'=='Debug.Emby6' or '$(Configuration)'=='Release.Emby6' or '$(Configuration)'=='Debug.Emby8' or '$(Configuration)'=='Release.Emby8'">
+    <ItemGroup Condition="'$(Configuration)'=='Debug.Emby6' or '$(Configuration)'=='Release.Emby6'">
+        <PackageReference Include="MediaBrowser.Server.Core" Version="4.8.0.80"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)'=='Debug.Emby8' or '$(Configuration)'=='Release.Emby8'">
         <PackageReference Include="MediaBrowser.Server.Core" Version="4.9.1.80"/>
     </ItemGroup>
 
