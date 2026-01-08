@@ -29,7 +29,8 @@ jobs:
       - name: Build Plugins
         run: |
           dotnet build --configuration Release -p:Version=${{ steps.shell.outputs.version }}
-          dotnet build --configuration Release.Emby -p:Version=${{ steps.shell.outputs.version }}
+          dotnet build --configuration Release.Emby6 -p:Version=${{ steps.shell.outputs.version }}
+          dotnet build --configuration Release.Emby8 -p:Version=${{ steps.shell.outputs.version }}
 
       - name: Generate Manifest
         run: |
@@ -58,4 +59,5 @@ jobs:
           tag_name: v${{ steps.shell.outputs.version }}
           files: |
             Jellyfin.Plugin.MetaTube/bin/Jellyfin.MetaTube@v${{ steps.shell.outputs.version }}.zip
-            Jellyfin.Plugin.MetaTube/bin/Emby.MetaTube@v${{ steps.shell.outputs.version }}.zip
+            Jellyfin.Plugin.MetaTube/bin/Emby6.MetaTube@v${{ steps.shell.outputs.version }}.zip
+            Jellyfin.Plugin.MetaTube/bin/Emby8.MetaTube@v${{ steps.shell.outputs.version }}.zip
