@@ -30,7 +30,6 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
 {
     private const string AvBase = "AVBASE";
     private const string Gfriends = "Gfriends";
-    private const string Rating = "JP-18+";
 
     private static readonly string[] AvBaseSupportedProviderNames = { "DUGA", "FANZA", "Getchu", "MGS" };
 
@@ -124,8 +123,12 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
                     Configuration.EnableTemplate
                         ? Configuration.OriginalTitleTemplate
                         : PluginConfiguration.DefaultOriginalTitleTemplate, parameters),
+                SortName = Configuration.EnableTemplate &&
+                           !string.IsNullOrWhiteSpace(Configuration.SortNameTemplate)
+                    ? RenderTemplate(Configuration.SortNameTemplate, parameters)
+                    : null,
                 Overview = m.Summary,
-                OfficialRating = Rating,
+                OfficialRating = Configuration.OfficialRating,
                 PremiereDate = m.ReleaseDate.GetValidDateTime(),
                 ProductionYear = m.ReleaseDate.GetValidYear(),
                 Genres = m.Genres?.Any() == true ? m.Genres : Array.Empty<string>()

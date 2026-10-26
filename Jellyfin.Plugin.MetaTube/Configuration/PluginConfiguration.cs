@@ -58,6 +58,12 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool EnableRatings { get; set; } = true;
 
 #if __EMBY__
+    [DisplayName("Official rating")]
+    [Description("Age rating value written to movie metadata. (default: JP-18+)")]
+#endif
+    public string OfficialRating { get; set; } = "JP-18+";
+
+#if __EMBY__
     [DisplayName("Enable trailers")]
     [Description("Generate online video trailers in strm format.")]
 #endif
@@ -127,25 +133,32 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool EnableTemplate { get; set; } = false;
 
 #if __EMBY__
-    [DisplayName("Name template")]
+    [DisplayName("Title template")]
 #endif
     public string NameTemplate { get; set; } = DefaultNameTemplate;
-
-#if __EMBY__
-    [DisplayName("Tagline template")]
-#endif
-    public string TaglineTemplate { get; set; } = DefaultTaglineTemplate;
 
 #if __EMBY__
     [DisplayName("Original title template")]
 #endif
     public string OriginalTitleTemplate { get; set; } = DefaultOriginalTitleTemplate;
 
+#if __EMBY__
+    [DisplayName("Sort title template")]
+#endif
+    public string SortNameTemplate { get; set; } = DefaultSortNameTemplate;
+
+#if __EMBY__
+    [DisplayName("Tagline template")]
+#endif
+    public string TaglineTemplate { get; set; } = DefaultTaglineTemplate;
+
     public static string DefaultNameTemplate => "{number} {title}";
 
     public static string DefaultTaglineTemplate => "配信開始日 {date}";
 
     public static string DefaultOriginalTitleTemplate => "{original_title}";
+
+    public static string DefaultSortNameTemplate => string.Empty;
 
 #if __EMBY__
     [DisplayName("Translation mode")]

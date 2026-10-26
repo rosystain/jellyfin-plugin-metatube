@@ -58,6 +58,12 @@
                         <div class="fieldDescription checkboxFieldDescription">Display community ratings from the original website.</div>
                     </div>
 
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="txtOfficialRating">Official rating:</label>
+                        <input id="txtOfficialRating" is="emby-input" name="txtOfficialRating" type="text"/>
+                        <div class="fieldDescription">Age rating value written to movie metadata. (default: JP-18+)</div>
+                    </div>
+
                     <div class="checkboxContainer checkboxContainer-withDescription">
                         <label class="emby-checkbox-label">
                             <input id="chkEnableTrailers" is="emby-checkbox" name="chkEnableTrailers" type="checkbox"/>
@@ -139,14 +145,8 @@
                     </div>
 
                     <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="txtNameTemplate">Name template:</label>
+                        <label class="inputLabel inputLabelUnfocused" for="txtNameTemplate">Title template:</label>
                         <input id="txtNameTemplate" is="emby-input" name="txtNameTemplate" type="text"/>
-                        <div class="fieldDescription"></div>
-                    </div>
-
-                    <div class="inputContainer">
-                        <label class="inputLabel inputLabelUnfocused" for="txtTaglineTemplate">Tagline template:</label>
-                        <input id="txtTaglineTemplate" is="emby-input" name="txtTaglineTemplate" type="text"/>
                         <div class="fieldDescription"></div>
                     </div>
 
@@ -154,6 +154,18 @@
                         <label class="inputLabel inputLabelUnfocused" for="txtOriginalTitleTemplate">Original title template:</label>
                         <input id="txtOriginalTitleTemplate" is="emby-input" name="txtOriginalTitleTemplate" type="text"/>
                         <div class="fieldDescription">Use {original_title} to keep the unmodified title returned by the metadata provider.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="txtSortNameTemplate">Sort title template:</label>
+                        <input id="txtSortNameTemplate" is="emby-input" name="txtSortNameTemplate" type="text"/>
+                        <div class="fieldDescription">Leave blank to use Jellyfin's default sort title.</div>
+                    </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="txtTaglineTemplate">Tagline template:</label>
+                        <input id="txtTaglineTemplate" is="emby-input" name="txtTaglineTemplate" type="text"/>
+                        <div class="fieldDescription"></div>
                     </div>
                 </div>
 
@@ -352,6 +364,7 @@
                 page.querySelector('#chkEnableCollections').checked = config.EnableCollections;
                 page.querySelector('#chkEnableDirectors').checked = config.EnableDirectors;
                 page.querySelector('#chkEnableRatings').checked = config.EnableRatings;
+                $('#txtOfficialRating', page).val(config.OfficialRating).change();
                 page.querySelector('#chkEnableTrailers').checked = config.EnableTrailers;
                 page.querySelector('#chkEnableRealActorNames').checked = config.EnableRealActorNames;
                 page.querySelector('#chkEnableBadges').checked = config.EnableBadges;
@@ -362,8 +375,9 @@
                 $('#txtRawMovieProviderFilter', page).val(config.RawMovieProviderFilter).change();
                 page.querySelector('#chkEnableTemplate').checked = config.EnableTemplate;
                 $('#txtNameTemplate', page).val(config.NameTemplate).change();
-                $('#txtTaglineTemplate', page).val(config.TaglineTemplate).change();
                 $('#txtOriginalTitleTemplate', page).val(config.OriginalTitleTemplate).change();
+                $('#txtSortNameTemplate', page).val(config.SortNameTemplate).change();
+                $('#txtTaglineTemplate', page).val(config.TaglineTemplate).change();
                 $('#selectTranslationMode', page).val(config.TranslationMode).change();
                 $('#selectTranslationEngine', page).val(config.TranslationEngine).change();
                 $('#txtBaiduAppId', page).val(config.BaiduAppId).change();
@@ -394,6 +408,7 @@
                 config.EnableCollections = $('#chkEnableCollections', form).prop('checked');
                 config.EnableDirectors = $('#chkEnableDirectors', form).prop('checked');
                 config.EnableRatings = $('#chkEnableRatings', form).prop('checked');
+                config.OfficialRating = $('#txtOfficialRating', form).val();
                 config.EnableTrailers = $('#chkEnableTrailers', form).prop('checked');
                 config.EnableRealActorNames = $('#chkEnableRealActorNames', form).prop('checked');
                 config.EnableBadges = $('#chkEnableBadges', form).prop('checked');
@@ -404,8 +419,9 @@
                 config.RawMovieProviderFilter = $('#txtRawMovieProviderFilter', form).val();
                 config.EnableTemplate = $('#chkEnableTemplate', form).prop('checked');
                 config.NameTemplate = $('#txtNameTemplate', form).val();
-                config.TaglineTemplate = $('#txtTaglineTemplate', form).val();
                 config.OriginalTitleTemplate = $('#txtOriginalTitleTemplate', form).val();
+                config.SortNameTemplate = $('#txtSortNameTemplate', form).val();
+                config.TaglineTemplate = $('#txtTaglineTemplate', form).val();
                 config.TranslationMode = $('#selectTranslationMode', form).val();
                 config.TranslationEngine = $('#selectTranslationEngine', form).val();
                 config.BaiduAppId = $('#txtBaiduAppId', form).val();
