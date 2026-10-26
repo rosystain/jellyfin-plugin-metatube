@@ -107,6 +107,11 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
             { @"{date}", $"{m.ReleaseDate:yyyy-MM-dd}" }
         };
 
+        var sortName = Configuration.EnableTemplate &&
+                       !string.IsNullOrWhiteSpace(Configuration.SortNameTemplate)
+            ? RenderTemplate(Configuration.SortNameTemplate, parameters)
+            : null;
+
         var result = new MetadataResult<Movie>
         {
             Item = new Movie
@@ -123,10 +128,11 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
                     Configuration.EnableTemplate
                         ? Configuration.OriginalTitleTemplate
                         : PluginConfiguration.DefaultOriginalTitleTemplate, parameters),
-                ForcedSortName = Configuration.EnableTemplate &&
-                                 !string.IsNullOrWhiteSpace(Configuration.SortNameTemplate)
-                    ? RenderTemplate(Configuration.SortNameTemplate, parameters)
-                    : null,
+#if __EMBY__
+                SortName = sortName,
+#else
+                ForcedSortName = sortName,
+#endif
                 Overview = m.Summary,
                 OfficialRating = Configuration.OfficialRating,
                 PremiereDate = m.ReleaseDate.GetValidDateTime(),
