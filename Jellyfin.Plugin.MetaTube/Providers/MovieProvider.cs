@@ -123,8 +123,8 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
                     Configuration.EnableTemplate
                         ? Configuration.OriginalTitleTemplate
                         : PluginConfiguration.DefaultOriginalTitleTemplate, parameters),
-                SortName = Configuration.EnableTemplate &&
-                           !string.IsNullOrWhiteSpace(Configuration.SortNameTemplate)
+                ForcedSortName = Configuration.EnableTemplate &&
+                                 !string.IsNullOrWhiteSpace(Configuration.SortNameTemplate)
                     ? RenderTemplate(Configuration.SortNameTemplate, parameters)
                     : null,
                 Overview = m.Summary,

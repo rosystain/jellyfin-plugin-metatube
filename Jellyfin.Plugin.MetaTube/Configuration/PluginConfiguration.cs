@@ -144,6 +144,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
 #if __EMBY__
     [DisplayName("Sort title template")]
+    [Description("Requires Enable template. Leave blank to use the default sort title.")]
 #endif
     public string SortNameTemplate { get; set; } = DefaultSortNameTemplate;
 
