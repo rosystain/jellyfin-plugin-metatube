@@ -4,13 +4,20 @@ import json
 import os
 import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.request import urlopen
+
 from packaging.version import Version
+
+DEFAULT_REPOSITORY = "rosystain/jellyfin-plugin-metatube"
+
+
+def get_repository() -> str:
+    return os.environ.get("GITHUB_REPOSITORY", DEFAULT_REPOSITORY)
 
 
 def md5sum(filename) -> str:
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
 
 
@@ -25,36 +32,37 @@ def get_jellyfin_version(csproj: str) -> str:
     raise Exception("Jellyfin version not found")
 
 
-def generate(filename, version, csproj) -> dict:
+def generate(filename, version, csproj, repository=None) -> dict:
+    repository = repository or get_repository()
     return {
-        'checksum': md5sum(filename),
-        'changelog': 'Auto Released by Actions',
-        'targetAbi': f'{get_jellyfin_version(csproj)}.0',
-        'sourceUrl': 'https://github.com/metatube-community/jellyfin-plugin-metatube/releases/download/'
-                     f'v{version}/Jellyfin.MetaTube@v{version}.zip',
-        'timestamp': datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ'),
-        'version': version
+        "checksum": md5sum(filename),
+        "changelog": "Auto Released by Actions",
+        "targetAbi": f"{get_jellyfin_version(csproj)}.0",
+        "sourceUrl": f"https://github.com/{repository}/releases/download/"
+        f"v{version}/Jellyfin.MetaTube@v{version}.zip",
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "version": version,
     }
 
 
 def main() -> None:
     filename = sys.argv[1]
-    version = filename.split('@', maxsplit=1)[1] \
-        .removeprefix('v') \
-        .removesuffix('.zip')
+    version = filename.split("@", maxsplit=1)[1].removeprefix("v").removesuffix(".zip")
+    csproj = os.path.join(
+        os.path.dirname(__file__),
+        "../Jellyfin.Plugin.MetaTube/Jellyfin.Plugin.MetaTube.csproj",
+    )
 
-    csproj = os.path.join(os.path.dirname(__file__),
-                          "../Jellyfin.Plugin.MetaTube/Jellyfin.Plugin.MetaTube.csproj")
-
-    with urlopen(
-            'https://raw.githubusercontent.com/metatube-community/jellyfin-plugin-metatube/dist/manifest.json') as f:
+    repository = get_repository()
+    manifest_url = f"https://raw.githubusercontent.com/{repository}/dist/manifest.json"
+    with urlopen(manifest_url) as f:
         manifest = json.load(f)
 
-    manifest[0]['versions'].insert(0, generate(filename, version, csproj))
+    manifest[0]["versions"].insert(0, generate(filename, version, csproj, repository))
 
-    with open('manifest.json', 'w') as f:
+    with open("manifest.json", "w") as f:
         json.dump(manifest, f, indent=2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

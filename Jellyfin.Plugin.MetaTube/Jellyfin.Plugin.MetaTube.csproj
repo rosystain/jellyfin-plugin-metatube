@@ -10,9 +10,9 @@
         <Version>$([System.DateTime]::UtcNow.ToString(yyyy.Mdd.Hmm.0))</Version>
         <Copyright>Copyright © 2023 MetaTube</Copyright>
         <RepositoryType>Git</RepositoryType>
-        <RepositoryUrl>https://github.com/metatube-community/jellyfin-plugin-metatube.git</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/metatube-community/jellyfin-plugin-metatube</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/metatube-community/jellyfin-plugin-metatube/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/rosystain/jellyfin-plugin-metatube.git</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/rosystain/jellyfin-plugin-metatube</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/rosystain/jellyfin-plugin-metatube/blob/main/LICENSE</PackageLicenseUrl>
         <PackageIcon>thumb.png</PackageIcon>
         <PackageId>MetaTube</PackageId>
         <Company>MetaTube</Company>
@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <TargetFramework Condition="'$(Configuration)'=='Debug' or '$(Configuration)'=='Release'">net9.0</TargetFramework>
+        <TargetFramework Condition="'$(Configuration)'=='Debug' or '$(Configuration)'=='Release'">net10.0</TargetFramework>
         <TargetFramework Condition="'$(Configuration)'=='Debug.Emby' or '$(Configuration)'=='Release.Emby'">net8.0</TargetFramework>
     </PropertyGroup>
 
@@ -28,13 +28,13 @@
         <DefineConstants>__EMBY__</DefineConstants>
     </PropertyGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Debug.Emby' or '$(Configuration)'=='Release.Emby'">
         <PackageReference Include="System.Memory" Version="4.5.5"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Debug' or '$(Configuration)'=='Release'">
-        <PackageReference Include="Jellyfin.Controller" Version="10.11.0"/>
-        <PackageReference Include="Jellyfin.Model" Version="10.11.0"/>
+        <PackageReference Include="Jellyfin.Controller" Version="12.0.0"/>
+        <PackageReference Include="Jellyfin.Model" Version="12.0.0"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Debug.Emby' or '$(Configuration)'=='Release.Emby'">

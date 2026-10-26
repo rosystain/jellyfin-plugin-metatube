@@ -34,6 +34,8 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public const string ProviderId = "MetaTube";
 
+    public const string GitHubRepository = "rosystain/jellyfin-plugin-metatube";
+
     public override string Name => ProviderName;
 
     public override string Description => "MetaTube Plugin for Jellyfin/Emby";
