@@ -149,6 +149,12 @@
                         <input id="txtTaglineTemplate" is="emby-input" name="txtTaglineTemplate" type="text"/>
                         <div class="fieldDescription"></div>
                     </div>
+
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="txtOriginalTitleTemplate">Original title template:</label>
+                        <input id="txtOriginalTitleTemplate" is="emby-input" name="txtOriginalTitleTemplate" type="text"/>
+                        <div class="fieldDescription">Use {original_title} to keep the unmodified title returned by the metadata provider.</div>
+                    </div>
                 </div>
 
                 <div class="verticalSection">
@@ -357,6 +363,7 @@
                 page.querySelector('#chkEnableTemplate').checked = config.EnableTemplate;
                 $('#txtNameTemplate', page).val(config.NameTemplate).change();
                 $('#txtTaglineTemplate', page).val(config.TaglineTemplate).change();
+                $('#txtOriginalTitleTemplate', page).val(config.OriginalTitleTemplate).change();
                 $('#selectTranslationMode', page).val(config.TranslationMode).change();
                 $('#selectTranslationEngine', page).val(config.TranslationEngine).change();
                 $('#txtBaiduAppId', page).val(config.BaiduAppId).change();
@@ -398,6 +405,7 @@
                 config.EnableTemplate = $('#chkEnableTemplate', form).prop('checked');
                 config.NameTemplate = $('#txtNameTemplate', form).val();
                 config.TaglineTemplate = $('#txtTaglineTemplate', form).val();
+                config.OriginalTitleTemplate = $('#txtOriginalTitleTemplate', form).val();
                 config.TranslationMode = $('#selectTranslationMode', form).val();
                 config.TranslationEngine = $('#selectTranslationEngine', form).val();
                 config.BaiduAppId = $('#txtBaiduAppId', form).val();

@@ -102,6 +102,7 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
             { @"{director}", m.Director },
             { @"{actors}", m.Actors?.Any() == true ? string.Join(' ', m.Actors) : string.Empty },
             { @"{first_actor}", m.Actors?.FirstOrDefault() },
+            { @"{original_title}", originalTitle },
             { @"{year}", $"{m.ReleaseDate:yyyy}" },
             { @"{month}", $"{m.ReleaseDate:MM}" },
             { @"{date}", $"{m.ReleaseDate:yyyy-MM-dd}" }
@@ -119,7 +120,10 @@ public class MovieProvider : BaseProvider, IRemoteMetadataProvider<Movie, MovieI
                     Configuration.EnableTemplate
                         ? Configuration.TaglineTemplate
                         : PluginConfiguration.DefaultTaglineTemplate, parameters),
-                OriginalTitle = originalTitle,
+                OriginalTitle = RenderTemplate(
+                    Configuration.EnableTemplate
+                        ? Configuration.OriginalTitleTemplate
+                        : PluginConfiguration.DefaultOriginalTitleTemplate, parameters),
                 Overview = m.Summary,
                 OfficialRating = Rating,
                 PremiereDate = m.ReleaseDate.GetValidDateTime(),
